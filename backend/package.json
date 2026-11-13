@@ -29,6 +29,7 @@
   "dependencies": {
     "celebrate": "^16.0.0",
     "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
     "express": "^4.19.2",
     "express-winston": "^4.2.0",
     "joi": "^18.3.2",

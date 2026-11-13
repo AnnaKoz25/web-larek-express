@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -9,6 +10,8 @@ import errorHandler from './middlewares/ErrorHandler';
 import notFound from './middlewares/NotFound';
 import requestLogger from './middlewares/requestLogger';
 import errorLogger from './middlewares/errorLogger';
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
