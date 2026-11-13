@@ -1,8 +1,8 @@
-import BadRequestError from "../errors/BadRequestError";
-import { Response, Request, NextFunction } from "express";
-import Product from "../models/Product";
+import { Response, Request, NextFunction } from 'express';
+import BadRequestError from '../errors/BadRequestError';
+import Product from '../models/Product';
 
-export const createOrder = async (
+const createOrder = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -12,7 +12,7 @@ export const createOrder = async (
       _id: { $in: req.body.items },
     });
     if (productsFromOrder.length !== req.body.items.length) {
-      return next(new BadRequestError("Товара не существует"));
+      return next(new BadRequestError('Товара не существует'));
     }
 
     const priceIsNull = productsFromOrder.some(
@@ -20,7 +20,7 @@ export const createOrder = async (
     );
 
     if (priceIsNull) {
-      return next(new BadRequestError("Товар не продается"));
+      return next(new BadRequestError('Товар не продается'));
     }
 
     const productsTotal = productsFromOrder.reduce(
@@ -29,13 +29,14 @@ export const createOrder = async (
     );
 
     if (req.body.total === productsTotal) {
-      res.send({ id: crypto.randomUUID(), total: productsTotal });
-    } else {
-      return next(
-        new BadRequestError("Произошла ошибка при подсчете суммы заказа"),
-      );
+      return res.send({ id: crypto.randomUUID(), total: productsTotal });
     }
+    return next(
+      new BadRequestError('Произошла ошибка при подсчете суммы заказа'),
+    );
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
+
+export default createOrder;
