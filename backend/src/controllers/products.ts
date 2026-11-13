@@ -21,7 +21,7 @@ export const createProduct = (
 ) => {
   const { title, image, category, description, price } = req.body;
   Product.create({ title, image, category, description, price })
-    .then((product) => res.send(product))
+    .then((product) => res.status(201).send(product))
     .catch((err) => {
       if (err instanceof MongooseError.ValidationError) {
         return next(new BadRequestError(err.message));
